@@ -195,12 +195,17 @@ lines.classList.add("visible");
 
 
 // sound
-document.getElementById("soundBtn").onclick=()=>{
+const soundBtn = document.getElementById("soundBtn");
+const spaceSound = document.getElementById("spaceSound");
 
-document.getElementById("spaceSound").play();
+soundBtn.addEventListener("click", () => {
 
-};
+spaceSound.volume = 0.4;   // comfortable volume
+spaceSound.play();
 
+soundBtn.innerText = "Sound Enabled";
+
+});
 
 
 
