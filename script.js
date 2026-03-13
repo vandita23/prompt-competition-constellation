@@ -200,13 +200,18 @@ const spaceSound = document.getElementById("spaceSound");
 
 soundBtn.addEventListener("click", () => {
 
-spaceSound.volume = 0.4;   // comfortable volume
-spaceSound.play();
+spaceSound.volume = 0.5;
 
+spaceSound.play()
+.then(() => {
 soundBtn.innerText = "Sound Enabled";
-
+})
+.catch(err => {
+console.log("Audio error:", err);
+alert("Audio couldn't play. Try clicking again.");
 });
 
+});
 
 
 // resize support
