@@ -198,15 +198,25 @@ lines.classList.add("visible");
 const soundBtn = document.getElementById("soundBtn");
 const spaceSound = document.getElementById("spaceSound");
 
-soundBtn.addEventListener("click", () => {
+soundBtn.addEventListener("click", async () => {
 
-spaceSound.volume = 0.4;
-spaceSound.play();
+try{
+
+spaceSound.volume = 0.5;
+
+await spaceSound.play();
 
 soundBtn.innerText = "Sound Enabled";
 
-});
+}
+catch(error){
 
+console.log(error);
+alert("Audio failed to play");
+
+}
+
+});
 // resize support
 window.addEventListener("resize",()=>{
 
