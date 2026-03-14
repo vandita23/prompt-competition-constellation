@@ -1,4 +1,4 @@
-// SPACE SOUND
+// SPACE SOUND BUTTON
 
 const audio = document.getElementById("spaceAudio");
 const button = document.getElementById("soundToggle");
@@ -16,12 +16,12 @@ button.innerText="Enable Space Sound";
 });
 
 
-// SCRAMBLE TEXT
+// GSAP SCRAMBLE TEXT
 
 const textElement = document.getElementById("scrambleText");
 const finalText = textElement.innerText;
 
-const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890#$%&*";
+const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890#@$%";
 
 let progress={value:0};
 
@@ -36,9 +36,9 @@ let result="";
 for(let i=0;i<finalText.length;i++){
 
 if(i < progress.value * finalText.length){
-result += finalText[i];
+result+=finalText[i];
 }else{
-result += chars[Math.floor(Math.random()*chars.length)];
+result+=chars[Math.floor(Math.random()*chars.length)];
 }
 
 }
@@ -50,7 +50,7 @@ textElement.innerText=result;
 
 
 
-// STAR UNIVERSE
+// 3D PARALLAX STARFIELD
 
 const canvas=document.getElementById("universe");
 const ctx=canvas.getContext("2d");
@@ -59,6 +59,8 @@ canvas.width=window.innerWidth;
 canvas.height=window.innerHeight;
 
 let stars=[];
+let mouseX=0;
+let mouseY=0;
 
 for(let i=0;i<1200;i++){
 
@@ -66,10 +68,15 @@ stars.push({
 x:Math.random()*canvas.width,
 y:Math.random()*canvas.height,
 size:Math.random()*2,
-speed:Math.random()*0.2 + 0.05
+speed:Math.random()*0.2
 });
 
 }
+
+document.addEventListener("mousemove",e=>{
+mouseX=e.clientX;
+mouseY=e.clientY;
+});
 
 function animate(){
 
@@ -77,12 +84,10 @@ ctx.clearRect(0,0,canvas.width,canvas.height);
 
 stars.forEach(star=>{
 
-star.y+=star.speed;
+star.x += (mouseX - canvas.width/2) * 0.00005;
+star.y += star.speed;
 
-if(star.y>canvas.height){
-star.y=0;
-star.x=Math.random()*canvas.width;
-}
+if(star.y > canvas.height) star.y=0;
 
 ctx.beginPath();
 ctx.arc(star.x,star.y,star.size,0,Math.PI*2);
@@ -151,13 +156,13 @@ starsConst.forEach((star,i)=>{
 
 setTimeout(()=>{
 star.classList.add("visible");
-},i*400);
+},i*300);
 
 });
 
 setTimeout(()=>{
 lines.classList.add("visible");
-},2000);
+},1500);
 
 }
 
