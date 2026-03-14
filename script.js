@@ -1,11 +1,29 @@
-// GSAP SCRAMBLE TEXT
+// SPACE SOUND
+
+const audio = document.getElementById("spaceAudio");
+const button = document.getElementById("soundToggle");
+
+button.addEventListener("click", () => {
+
+if(audio.paused){
+audio.play();
+button.innerText="Sound Enabled";
+}else{
+audio.pause();
+button.innerText="Enable Space Sound";
+}
+
+});
+
+
+// SCRAMBLE TEXT
 
 const textElement = document.getElementById("scrambleText");
 const finalText = textElement.innerText;
 
-const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890#$%&*";
+const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890#$%&*";
 
-let progress = {value:0};
+let progress={value:0};
 
 gsap.to(progress,{
 value:1,
@@ -18,25 +36,21 @@ let result="";
 for(let i=0;i<finalText.length;i++){
 
 if(i < progress.value * finalText.length){
-
 result += finalText[i];
-
 }else{
-
-result += characters[Math.floor(Math.random()*characters.length)];
-
+result += chars[Math.floor(Math.random()*chars.length)];
 }
 
 }
 
-textElement.innerText = result;
+textElement.innerText=result;
 
 }
 });
 
 
 
-// STARFIELD BACKGROUND
+// STAR UNIVERSE
 
 const canvas=document.getElementById("universe");
 const ctx=canvas.getContext("2d");
@@ -120,75 +134,9 @@ shoot();
 
 setInterval(meteor,6000);
 
-const textCanvas = document.getElementById("textStars");
-const tctx = textCanvas.getContext("2d");
-
-textCanvas.width = window.innerWidth;
-textCanvas.height = window.innerHeight;
-
-let particles = [];
-
-const text = "URSA MAJOR";
-
-tctx.font = "bold 120px monospace";
-tctx.fillStyle = "white";
-tctx.fillText(text, 200, 200);
-
-const imageData = tctx.getImageData(0,0,textCanvas.width,textCanvas.height);
-
-for(let y=0;y<imageData.height;y+=6){
-for(let x=0;x<imageData.width;x+=6){
-
-const index = (y*imageData.width + x)*4;
-
-if(imageData.data[index+3] > 128){
-
-particles.push({
-x:Math.random()*textCanvas.width,
-y:Math.random()*textCanvas.height,
-targetX:x,
-targetY:y
-});
-
-}
-
-}
-}
-
-tctx.clearRect(0,0,textCanvas.width,textCanvas.height);
-
-particles.forEach(p=>{
-
-gsap.to(p,{
-x:p.targetX,
-y:p.targetY,
-duration:2,
-ease:"power3.out"
-});
-
-});
-
-function render(){
-
-tctx.clearRect(0,0,textCanvas.width,textCanvas.height);
-
-particles.forEach(p=>{
-
-tctx.beginPath();
-tctx.arc(p.x,p.y,1.5,0,Math.PI*2);
-tctx.fillStyle="white";
-tctx.fill();
-
-});
-
-requestAnimationFrame(render);
-
-}
-
-render();
 
 
-// CONSTELLATION SCROLL REVEAL
+// CONSTELLATION REVEAL
 
 const starsConst=document.querySelectorAll(".star");
 const lines=document.querySelector(".dipper-lines");
@@ -212,16 +160,5 @@ lines.classList.add("visible");
 },2000);
 
 }
-
-});
-
-
-
-// RESPONSIVE CANVAS
-
-window.addEventListener("resize",()=>{
-
-canvas.width=window.innerWidth;
-canvas.height=window.innerHeight;
 
 });
