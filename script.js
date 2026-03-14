@@ -113,6 +113,22 @@ requestAnimationFrame(animateStars);
 
 animateStars();
 
+const sections = document.querySelectorAll(".story");
+
+window.addEventListener("scroll",()=>{
+
+sections.forEach(sec=>{
+
+const top = sec.getBoundingClientRect().top;
+
+if(top < window.innerHeight - 100){
+sec.classList.add("visible");
+}
+
+});
+
+});
+
 
 
 // METEORS
