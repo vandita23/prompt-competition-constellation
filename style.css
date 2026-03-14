@@ -1,11 +1,12 @@
 body{
 margin:0;
-font-family: "Helvetica Neue", Arial;
+font-family:Arial, Helvetica, sans-serif;
 background:black;
 color:white;
 overflow-x:hidden;
-line-height:1.8;
+line-height:1.7;
 }
+
 
 canvas{
 position:fixed;
@@ -14,28 +15,12 @@ left:0;
 z-index:-1;
 }
 
-#soundToggle{
-position:fixed;
-top:20px;
-right:20px;
-z-index:999;
-background:#0b0b1a;
-border:1px solid #555;
-color:white;
-padding:12px 18px;
-border-radius:6px;
-cursor:pointer;
-font-size:14px;
-}
-
-#soundToggle:hover{
-background:#1a1a3a;
-}
 
 section{
-padding:120px 18%;
+padding:120px 20%;
 text-align:center;
 }
+
 
 .hero{
 height:100vh;
@@ -45,37 +30,81 @@ justify-content:center;
 align-items:center;
 }
 
+
 .title{
 font-size:80px;
-letter-spacing:12px;
-font-family:monospace;
-color:#7cc6ff;
-text-shadow:0 0 20px #7cc6ff;
 }
 
-.subtitle{
-font-size:20px;
-opacity:0.85;
+
+.glow{
+text-shadow:0 0 20px #6ea8ff;
+animation:glowPulse 3s infinite alternate;
+}
+
+
+@keyframes glowPulse{
+from{ text-shadow:0 0 10px #6ea8ff }
+to{ text-shadow:0 0 40px #6ea8ff }
+}
+
+
+.typewriter{
+overflow:hidden;
+border-right:2px solid white;
+white-space:nowrap;
+animation:typing 6s steps(60,end), blink 1s infinite;
+}
+
+
+@keyframes typing{
+from{width:0}
+to{width:100%}
+}
+
+
+@keyframes blink{
+50%{border-color:transparent}
+}
+
+
+button{
 margin-top:20px;
+padding:10px 20px;
+background:#0a2cff;
+border:none;
+color:white;
+border-radius:20px;
+cursor:pointer;
 }
 
-.story h2{
-font-size:42px;
-margin-bottom:25px;
+
+.fade{
+animation:fadeIn 3s;
 }
 
-.story p{
-font-size:19px;
-margin-bottom:18px;
-max-width:850px;
-margin-left:auto;
-margin-right:auto;
+
+@keyframes fadeIn{
+from{opacity:0; transform:translateY(40px)}
+to{opacity:1; transform:translateY(0)}
 }
+
+
+.slide{
+animation:slideIn 3s;
+}
+
+
+@keyframes slideIn{
+from{transform:translateX(-80px); opacity:0}
+to{transform:translateX(0); opacity:1}
+}
+
 
 .constellation{
 height:600px;
 position:relative;
 }
+
 
 .star{
 width:10px;
@@ -84,15 +113,17 @@ background:white;
 border-radius:50%;
 position:absolute;
 opacity:0;
-box-shadow:0 0 15px white;
+box-shadow:0 0 10px white;
 transition:1s;
 }
 
+
 .star.visible{
 opacity:1;
-transform:scale(1.6);
+transform:scale(1.5);
 box-shadow:0 0 25px #7cc6ff;
 }
+
 
 .s1{top:300px;left:150px;}
 .s2{top:250px;left:250px;}
@@ -102,6 +133,7 @@ box-shadow:0 0 25px #7cc6ff;
 .s6{top:380px;left:310px;}
 .s7{top:400px;left:390px;}
 
+
 .dipper-lines{
 position:absolute;
 width:100%;
@@ -109,23 +141,33 @@ height:100%;
 stroke:#7cc6ff;
 stroke-width:2;
 opacity:0;
-stroke-dasharray:1000;
-stroke-dashoffset:1000;
+transition:2s;
 }
+
 
 .dipper-lines.visible{
-animation:draw 3s forwards;
+opacity:0.7;
 }
 
-@keyframes draw{
-to{
-stroke-dashoffset:0;
-opacity:0.8;
+
+.north{
+width:18px;
+height:18px;
+background:white;
+border-radius:50%;
+margin:50px auto;
+animation:northGlow 2s infinite alternate;
 }
+
+
+@keyframes northGlow{
+from{box-shadow:0 0 10px white}
+to{box-shadow:0 0 60px #7cc6ff}
 }
+
 
 .final{
 font-size:26px;
-margin-top:30px;
 font-weight:bold;
+margin-top:40px;
 }
