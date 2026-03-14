@@ -1,122 +1,81 @@
-const canvas = document.getElementById("universe");
-const ctx = canvas.getContext("2d");
+// GSAP SCRAMBLE TEXT
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+const textElement = document.getElementById("scrambleText");
+const finalText = textElement.innerText;
 
+const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890#$%&*";
 
-// mouse movement for parallax
-let mouseX = 0;
-let mouseY = 0;
+let progress = {value:0};
 
-document.addEventListener("mousemove", e=>{
-mouseX = e.clientX;
-mouseY = e.clientY;
+gsap.to(progress,{
+value:1,
+duration:2,
+ease:"power2.out",
+onUpdate:()=>{
+
+let result="";
+
+for(let i=0;i<finalText.length;i++){
+
+if(i < progress.value * finalText.length){
+
+result += finalText[i];
+
+}else{
+
+result += characters[Math.floor(Math.random()*characters.length)];
+
+}
+
+}
+
+textElement.innerText = result;
+
+}
 });
 
 
-// star layers (depth)
-let starsFar = [];
-let starsMid = [];
-let starsNear = [];
 
-function createStars(arr,count,speed,size){
+// STARFIELD BACKGROUND
 
-for(let i=0;i<count;i++){
+const canvas=document.getElementById("universe");
+const ctx=canvas.getContext("2d");
 
-arr.push({
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+let stars=[];
+
+for(let i=0;i<1200;i++){
+
+stars.push({
 x:Math.random()*canvas.width,
 y:Math.random()*canvas.height,
-size:Math.random()*size,
-speed:speed*Math.random(),
-opacity:Math.random(),
-twinkle:Math.random()*0.02
-});
-
-}
-
-}
-
-createStars(starsFar,700,0.03,1);
-createStars(starsMid,400,0.05,1.5);
-createStars(starsNear,200,0.08,2);
-
-
-// milky way particles
-let milkyWay=[];
-
-for(let i=0;i<300;i++){
-
-milkyWay.push({
-x:Math.random()*canvas.width,
-y:canvas.height/2 + (Math.random()*200-100),
 size:Math.random()*2,
-opacity:Math.random()*0.4
+speed:Math.random()*0.2 + 0.05
 });
 
 }
 
+function animate(){
 
+ctx.clearRect(0,0,canvas.width,canvas.height);
 
-// draw stars
-function drawStars(arr,parallax){
+stars.forEach(star=>{
 
-arr.forEach(star=>{
-
-star.y += star.speed;
+star.y+=star.speed;
 
 if(star.y>canvas.height){
 star.y=0;
 star.x=Math.random()*canvas.width;
 }
 
-star.opacity+=star.twinkle;
-
-if(star.opacity>1 || star.opacity<0){
-star.twinkle*=-1;
-}
-
-let px=star.x+(mouseX-canvas.width/2)*parallax;
-let py=star.y+(mouseY-canvas.height/2)*parallax;
-
 ctx.beginPath();
-ctx.arc(px,py,star.size,0,Math.PI*2);
-ctx.fillStyle="rgba(255,255,255,"+star.opacity+")";
+ctx.arc(star.x,star.y,star.size,0,Math.PI*2);
+ctx.fillStyle="white";
 ctx.fill();
 
 });
-
-}
-
-
-
-// draw milky way
-function drawMilkyWay(){
-
-milkyWay.forEach(p=>{
-
-ctx.beginPath();
-ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
-ctx.fillStyle="rgba(180,200,255,"+p.opacity+")";
-ctx.fill();
-
-});
-
-}
-
-
-
-// animation
-function animate(){
-
-ctx.fillStyle="black";
-ctx.fillRect(0,0,canvas.width,canvas.height);
-
-drawMilkyWay();
-
-drawStars(starsFar,0.01);
-drawStars(starsMid,0.02);
-drawStars(starsNear,0.04);
 
 requestAnimationFrame(animate);
 
@@ -126,14 +85,14 @@ animate();
 
 
 
+// METEORS
 
-// meteors
 function meteor(){
 
 let x=Math.random()*canvas.width;
 let y=0;
 
-let length=120;
+let length=100;
 let speed=4;
 let opacity=1;
 
@@ -143,12 +102,11 @@ ctx.beginPath();
 ctx.moveTo(x,y);
 ctx.lineTo(x+length,y+length);
 ctx.strokeStyle="rgba(255,255,255,"+opacity+")";
-ctx.lineWidth=2;
 ctx.stroke();
 
 x+=speed;
 y+=speed;
-opacity-=0.015;
+opacity-=0.02;
 
 if(opacity>0){
 requestAnimationFrame(shoot);
@@ -160,12 +118,12 @@ shoot();
 
 }
 
-setInterval(meteor,7000);
+setInterval(meteor,6000);
 
 
 
+// CONSTELLATION SCROLL REVEAL
 
-// constellation animation
 const starsConst=document.querySelectorAll(".star");
 const lines=document.querySelector(".dipper-lines");
 
@@ -179,13 +137,13 @@ starsConst.forEach((star,i)=>{
 
 setTimeout(()=>{
 star.classList.add("visible");
-},i*600);
+},i*400);
 
 });
 
 setTimeout(()=>{
 lines.classList.add("visible");
-},3500);
+},2000);
 
 }
 
@@ -193,31 +151,8 @@ lines.classList.add("visible");
 
 
 
+// RESPONSIVE CANVAS
 
-// sound
-const soundBtn = document.getElementById("soundBtn");
-const spaceSound = document.getElementById("spaceSound");
-
-soundBtn.addEventListener("click", async () => {
-
-try{
-
-spaceSound.volume = 0.5;
-
-await spaceSound.play();
-
-soundBtn.innerText = "Sound Enabled";
-
-}
-catch(error){
-
-console.log(error);
-alert("Audio failed to play");
-
-}
-
-});
-// resize support
 window.addEventListener("resize",()=>{
 
 canvas.width=window.innerWidth;
