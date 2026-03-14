@@ -27,7 +27,7 @@ stars.forEach(star=>{
 
 star.y += star.speed;
 
-drawMeteors();
+
 
 if(star.y > canvas.height){
 star.y = 0;
@@ -40,6 +40,8 @@ ctx.fillStyle="white";
 ctx.fill();
 
 });
+
+drawMeteors();
 
 requestAnimationFrame(animateStars);
 
@@ -143,19 +145,23 @@ setTimeout(scramble,50);
 
 }
 
+window.addEventListener("load",()=>{
+
 gsap.registerPlugin(ScrollTrigger);
 
 gsap.from(".dipper-lines line",{
 scrollTrigger:{
 trigger:".constellation",
-start:"top 80%",
+start:"top 75%",
 toggleActions:"play none none none"
 },
-duration:1.5,
+duration:1.2,
 opacity:0,
 scaleX:0,
 transformOrigin:"left center",
-stagger:0.3
+stagger:0.25
+});
+
 });
 
 scramble();
