@@ -143,17 +143,19 @@ setTimeout(scramble,50);
 
 }
 
+gsap.registerPlugin(ScrollTrigger);
+
 gsap.from(".dipper-lines line",{
 scrollTrigger:{
 trigger:".constellation",
-start:"top 80%"
+start:"top 80%",
+toggleActions:"play none none none"
 },
 duration:1.5,
 opacity:0,
 scaleX:0,
 transformOrigin:"left center",
-stagger:0.2
+stagger:0.3
 });
-
 
 scramble();
