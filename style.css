@@ -104,7 +104,10 @@ width:10px;
 height:10px;
 background:white;
 border-radius:50%;
-box-shadow:0 0 15px white;
+box-shadow:
+0 0 10px white,
+0 0 20px #7cc6ff,
+0 0 30px #7cc6ff;
 }
 
 .s1{top:200px;left:100px;}
