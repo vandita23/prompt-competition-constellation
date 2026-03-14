@@ -1,96 +1,122 @@
-// SOUND BUTTON
+const canvas = document.getElementById("universe");
+const ctx = canvas.getContext("2d");
 
-const audio = document.getElementById("spaceAudio");
-const button = document.getElementById("soundToggle");
-
-button.onclick = () => {
-
-if(audio.paused){
-audio.play();
-button.innerText="🔊 Sound Enabled";
-}else{
-audio.pause();
-button.innerText="🔊 Enable Space Sound";
-}
-
-};
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 
 
+// mouse movement for parallax
+let mouseX = 0;
+let mouseY = 0;
 
-// GSAP GLITCH TEXT
-
-const textElement = document.getElementById("scrambleText");
-const finalText = textElement.innerText;
-
-const chars="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%";
-
-let progress={value:0};
-
-gsap.to(progress,{
-value:1,
-duration:2,
-ease:"power2.out",
-onUpdate:()=>{
-
-let result="";
-
-for(let i=0;i<finalText.length;i++){
-
-if(i<progress.value*finalText.length){
-result+=finalText[i];
-}else{
-result+=chars[Math.floor(Math.random()*chars.length)];
-}
-
-}
-
-textElement.innerText=result;
-
-}
+document.addEventListener("mousemove", e=>{
+mouseX = e.clientX;
+mouseY = e.clientY;
 });
 
 
+// star layers (depth)
+let starsFar = [];
+let starsMid = [];
+let starsNear = [];
 
-// STAR BACKGROUND
+function createStars(arr,count,speed,size){
 
-const canvas=document.getElementById("universe");
-const ctx=canvas.getContext("2d");
+for(let i=0;i<count;i++){
 
-canvas.width=window.innerWidth;
-canvas.height=window.innerHeight;
-
-let stars=[];
-
-for(let i=0;i<800;i++){
-
-stars.push({
+arr.push({
 x:Math.random()*canvas.width,
 y:Math.random()*canvas.height,
-size:Math.random()*2,
-speed:Math.random()*0.3 + 0.05
+size:Math.random()*size,
+speed:speed*Math.random(),
+opacity:Math.random(),
+twinkle:Math.random()*0.02
 });
 
 }
 
-function animate(){
+}
 
-ctx.clearRect(0,0,canvas.width,canvas.height);
+createStars(starsFar,700,0.03,1);
+createStars(starsMid,400,0.05,1.5);
+createStars(starsNear,200,0.08,2);
 
-stars.forEach(star=>{
 
-star.y+=star.speed;
+// milky way particles
+let milkyWay=[];
+
+for(let i=0;i<300;i++){
+
+milkyWay.push({
+x:Math.random()*canvas.width,
+y:canvas.height/2 + (Math.random()*200-100),
+size:Math.random()*2,
+opacity:Math.random()*0.4
+});
+
+}
+
+
+
+// draw stars
+function drawStars(arr,parallax){
+
+arr.forEach(star=>{
+
+star.y += star.speed;
 
 if(star.y>canvas.height){
 star.y=0;
 star.x=Math.random()*canvas.width;
 }
 
+star.opacity+=star.twinkle;
+
+if(star.opacity>1 || star.opacity<0){
+star.twinkle*=-1;
+}
+
+let px=star.x+(mouseX-canvas.width/2)*parallax;
+let py=star.y+(mouseY-canvas.height/2)*parallax;
+
 ctx.beginPath();
-ctx.arc(star.x,star.y,star.size,0,Math.PI*2);
-ctx.fillStyle="white";
+ctx.arc(px,py,star.size,0,Math.PI*2);
+ctx.fillStyle="rgba(255,255,255,"+star.opacity+")";
 ctx.fill();
 
 });
+
+}
+
+
+
+// draw milky way
+function drawMilkyWay(){
+
+milkyWay.forEach(p=>{
+
+ctx.beginPath();
+ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+ctx.fillStyle="rgba(180,200,255,"+p.opacity+")";
+ctx.fill();
+
+});
+
+}
+
+
+
+// animation
+function animate(){
+
+ctx.fillStyle="black";
+ctx.fillRect(0,0,canvas.width,canvas.height);
+
+drawMilkyWay();
+
+drawStars(starsFar,0.01);
+drawStars(starsMid,0.02);
+drawStars(starsNear,0.04);
 
 requestAnimationFrame(animate);
 
@@ -100,15 +126,15 @@ animate();
 
 
 
-// METEORS
 
+// meteors
 function meteor(){
 
 let x=Math.random()*canvas.width;
 let y=0;
 
-let length=100;
-let speed=5;
+let length=120;
+let speed=4;
 let opacity=1;
 
 function shoot(){
@@ -117,11 +143,12 @@ ctx.beginPath();
 ctx.moveTo(x,y);
 ctx.lineTo(x+length,y+length);
 ctx.strokeStyle="rgba(255,255,255,"+opacity+")";
+ctx.lineWidth=2;
 ctx.stroke();
 
 x+=speed;
 y+=speed;
-opacity-=0.02;
+opacity-=0.015;
 
 if(opacity>0){
 requestAnimationFrame(shoot);
@@ -137,8 +164,8 @@ setInterval(meteor,7000);
 
 
 
-// CONSTELLATION REVEAL
 
+// constellation animation
 const starsConst=document.querySelectorAll(".star");
 const lines=document.querySelector(".dipper-lines");
 
@@ -152,14 +179,35 @@ starsConst.forEach((star,i)=>{
 
 setTimeout(()=>{
 star.classList.add("visible");
-},i*300);
+},i*600);
 
 });
 
 setTimeout(()=>{
 lines.classList.add("visible");
-},1500);
+},3500);
 
 }
+
+});
+
+
+
+
+// sound
+document.getElementById("soundBtn").onclick=()=>{
+
+document.getElementById("spaceSound").play();
+
+};
+
+
+
+
+// resize support
+window.addEventListener("resize",()=>{
+
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
 
 });
