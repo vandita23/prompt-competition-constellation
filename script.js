@@ -148,9 +148,12 @@ scrollTrigger:{
 trigger:".constellation",
 start:"top 80%"
 },
-duration:2,
-drawSVG:0,
-stagger:0.3
+duration:1.5,
+opacity:0,
+scaleX:0,
+transformOrigin:"left center",
+stagger:0.2
 });
+
 
 scramble();
