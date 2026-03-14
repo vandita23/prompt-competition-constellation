@@ -51,7 +51,10 @@ textElement.innerText=result;
 
 
 
-// SPACE WARP STARFIELD
+
+
+
+// STARFIELD WITH SCROLL SPACE EFFECT
 
 const canvas = document.getElementById("universe");
 const ctx = canvas.getContext("2d");
@@ -62,59 +65,53 @@ canvas.height = window.innerHeight;
 let stars = [];
 const STAR_COUNT = 900;
 
-for (let i = 0; i < STAR_COUNT; i++) {
+for(let i = 0; i < STAR_COUNT; i++){
 
 stars.push({
 x: Math.random() * canvas.width,
 y: Math.random() * canvas.height,
-z: Math.random() * canvas.width
+size: Math.random() * 2 + 0.5
 });
 
 }
 
+// track scroll
+let scrollSpeed = 0;
+
+window.addEventListener("scroll", () => {
+
+scrollSpeed = window.scrollY * 0.02;
+
+});
+
+// animate stars
 function animateStars(){
 
-ctx.fillStyle = "black";
-ctx.fillRect(0,0,canvas.width,canvas.height);
+ctx.clearRect(0,0,canvas.width,canvas.height);
 
-for(let i = 0; i < STAR_COUNT; i++){
+stars.forEach(star => {
 
-let star = stars[i];
+star.y += star.size + scrollSpeed * 0.05;
 
-star.z -= 1.5;
+if(star.y > canvas.height){
 
-if(star.z <= 0){
-
+star.y = 0;
 star.x = Math.random() * canvas.width;
-star.y = Math.random() * canvas.height;
-star.z = canvas.width;
 
 }
 
-let k = 128.0 / star.z;
-
-let px = star.x * k + canvas.width / 2;
-let py = star.y * k + canvas.height / 2;
-
-if(px >= 0 && px <= canvas.width && py >= 0 && py <= canvas.height){
-
-let size = (1 - star.z / canvas.width) * 3;
-
 ctx.beginPath();
-ctx.arc(px, py, size, 0, Math.PI * 2);
+ctx.arc(star.x, star.y, star.size, 0, Math.PI*2);
 ctx.fillStyle = "white";
 ctx.fill();
 
-}
-
-}
+});
 
 requestAnimationFrame(animateStars);
 
 }
 
 animateStars();
-
 
 
 
