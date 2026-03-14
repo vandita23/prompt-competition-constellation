@@ -91,11 +91,10 @@ height:100%;
 }
 
 .dipper-lines line{
-stroke:white;
+stroke:#9ad4ff;
 stroke-width:2;
-opacity:0.6;
+filter:drop-shadow(0 0 6px #9ad4ff);
 }
-
 /* STARS */
 
 .star{
