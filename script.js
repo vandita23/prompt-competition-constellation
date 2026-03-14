@@ -120,6 +120,72 @@ shoot();
 
 setInterval(meteor,6000);
 
+const textCanvas = document.getElementById("textStars");
+const tctx = textCanvas.getContext("2d");
+
+textCanvas.width = window.innerWidth;
+textCanvas.height = window.innerHeight;
+
+let particles = [];
+
+const text = "URSA MAJOR";
+
+tctx.font = "bold 120px monospace";
+tctx.fillStyle = "white";
+tctx.fillText(text, 200, 200);
+
+const imageData = tctx.getImageData(0,0,textCanvas.width,textCanvas.height);
+
+for(let y=0;y<imageData.height;y+=6){
+for(let x=0;x<imageData.width;x+=6){
+
+const index = (y*imageData.width + x)*4;
+
+if(imageData.data[index+3] > 128){
+
+particles.push({
+x:Math.random()*textCanvas.width,
+y:Math.random()*textCanvas.height,
+targetX:x,
+targetY:y
+});
+
+}
+
+}
+}
+
+tctx.clearRect(0,0,textCanvas.width,textCanvas.height);
+
+particles.forEach(p=>{
+
+gsap.to(p,{
+x:p.targetX,
+y:p.targetY,
+duration:2,
+ease:"power3.out"
+});
+
+});
+
+function render(){
+
+tctx.clearRect(0,0,textCanvas.width,textCanvas.height);
+
+particles.forEach(p=>{
+
+tctx.beginPath();
+tctx.arc(p.x,p.y,1.5,0,Math.PI*2);
+tctx.fillStyle="white";
+tctx.fill();
+
+});
+
+requestAnimationFrame(render);
+
+}
+
+render();
 
 
 // CONSTELLATION SCROLL REVEAL
