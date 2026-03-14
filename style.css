@@ -1,4 +1,3 @@
-/* General */
 body {
   margin:0;
   font-family:"Inter",sans-serif;
@@ -6,13 +5,15 @@ body {
   color:white;
   overflow-x:hidden;
 }
-#universe{
+
+#universe {
   position:fixed;
   top:0; left:0;
   width:100%; height:100%;
   z-index:-1;
 }
-#soundToggle{
+
+#soundToggle {
   position:fixed;
   top:20px; right:20px;
   background:#0b0b20;
@@ -24,8 +25,7 @@ body {
   z-index:1000;
 }
 
-/* Hero */
-.hero{
+.hero {
   height:100vh;
   display:flex;
   flex-direction:column;
@@ -33,47 +33,45 @@ body {
   align-items:center;
   text-align:center;
 }
-.title{
+.title {
   font-family:"Orbitron",sans-serif;
   font-size:80px;
   letter-spacing:12px;
   color:#7cc6ff;
   text-shadow:0 0 15px #7cc6ff;
 }
-.subtitle{
-  font-size:20px;
+.subtitle {
+  font-size:22px;
   max-width:600px;
 }
 
-/* Sections */
-section{
-  padding:120px 15%;
+section {
+  padding:100px 15%;
   text-align:center;
 }
-.story h2{
+
+.story h2 {
   font-family:"Orbitron",sans-serif;
   font-size:36px;
   color:#8ed0ff;
   margin-bottom:20px;
 }
-.story p{
+.story p {
   font-size:18px;
   line-height:1.8;
   margin-bottom:20px;
 }
 
-/* Constellation */
-.constellation{
+.constellation {
   height:400px;
 }
-.star{
+
+.star {
   fill:white;
   opacity:0;
-  filter: drop-shadow(0 0 6px white)
-          drop-shadow(0 0 12px #7cc6ff)
-          drop-shadow(0 0 18px #7cc6ff);
+  filter:drop-shadow(0 0 6px white) drop-shadow(0 0 12px #7cc6ff) drop-shadow(0 0 18px #7cc6ff);
 }
-.dipper line{
+.dipper line {
   stroke:#9ad4ff;
   stroke-width:2;
   opacity:0;
