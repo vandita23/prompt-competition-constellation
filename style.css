@@ -93,7 +93,7 @@ height:100%;
 .dipper-lines line{
 stroke:#9ad4ff;
 stroke-width:2;
-filter:drop-shadow(0 0 6px #9ad4ff);
+transform-origin:left center;
 }
 /* STARS */
 
