@@ -1,79 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ursa Major – The Big Dipper</title>
+<title>Ursa Major – Finding Hope in the Dark</title>
 
-<!-- Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&family=Inter:wght@300;400&display=swap" rel="stylesheet">
-
-<!-- CSS -->
 <link rel="stylesheet" href="style.css">
 
-<!-- GSAP -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 </head>
-
 <body>
 
-<!-- Canvas for background stars -->
 <canvas id="universe"></canvas>
 
-<!-- Audio -->
 <audio id="spaceAudio" loop>
-<source src="./audiopapkin-ambient-soundscapes-007-space-atmosphere-304974.mp3" type="audio/mpeg">
+  <source src="space.mp3" type="audio/mpeg">
 </audio>
 <button id="soundToggle">🔊 Enable Space Sound</button>
 
-<!-- Hero section -->
 <section class="hero">
-<h1 id="scrambleText" class="title">URSA MAJOR</h1>
-<p class="subtitle">A constellation that has guided travelers for thousands of years.</p>
-</section>
-
-<!-- Story sections -->
-<section class="story">
-<h2>The Great Bear</h2>
-<p>Ursa Major, meaning "Great Bear", is one of the most ancient and recognizable constellations. Civilizations across the world have imagined stories written across the heavens.</p>
-<p>For the Greeks it was a celestial bear. For others, it was a wagon or a chariot moving slowly across the sky.</p>
+  <h1 id="scrambleText" class="title">URSA MAJOR</h1>
+  <p class="subtitle">Even in the darkest skies, the stars will guide you forward.</p>
 </section>
 
 <section class="story">
-<h2>The Big Dipper</h2>
-<p>Within Ursa Major lies the famous Big Dipper pattern. Seven bright stars form a shape resembling a ladle.</p>
-<p>For centuries, travelers used it to navigate because two stars point toward Polaris, the North Star.</p>
+  <h2>The Great Bear</h2>
+  <p>Ursa Major, the Great Bear, has inspired humans for thousands of years. Ancient civilizations saw it as a giant bear wandering the sky, a cosmic guide that never sleeps. It symbolizes something bigger than ourselves — a constant reminder that no matter how dark life feels, guidance exists.</p>
+  <p>Across cultures, Ursa Major was a compass, a storybook, and a source of hope. Even when lost, people looked up at its stars to find direction.</p>
+</section>
+
+<section class="story">
+  <h2>The Big Dipper</h2>
+  <p>Within Ursa Major lies the Big Dipper — seven bright stars forming a ladle-like shape. Its simplicity made it a universal symbol for navigation. The pointer stars direct travelers to Polaris, the North Star, steadfast in the night sky.</p>
+  <p>For centuries, sailors, wanderers, and explorers relied on these stars. The Big Dipper taught humanity a lesson: even a small pattern of light can guide you through vast darkness.</p>
 </section>
 
 <section class="constellation">
-<h2>The Big Dipper Reveals Itself</h2>
+  <h2>The Big Dipper Reveals Itself</h2>
 
-<svg viewBox="0 0 800 400" class="dipper">
-  <!-- Stars -->
-  <circle class="star" cx="100" cy="200" r="5"/>
-  <circle class="star" cx="200" cy="150" r="5"/>
-  <circle class="star" cx="300" cy="170" r="5"/>
-  <circle class="star" cx="400" cy="200" r="5"/>
-  <circle class="star" cx="180" cy="250" r="5"/>
-  <circle class="star" cx="260" cy="280" r="5"/>
-  <circle class="star" cx="340" cy="300" r="5"/>
+  <svg viewBox="0 0 800 400" class="dipper">
+    <circle class="star" cx="100" cy="200" r="5"/>
+    <circle class="star" cx="200" cy="150" r="5"/>
+    <circle class="star" cx="300" cy="170" r="5"/>
+    <circle class="star" cx="400" cy="200" r="5"/>
+    <circle class="star" cx="180" cy="250" r="5"/>
+    <circle class="star" cx="260" cy="280" r="5"/>
+    <circle class="star" cx="340" cy="300" r="5"/>
 
-  <!-- Constellation lines -->
-  <line x1="100" y1="200" x2="200" y2="150"/>
-  <line x1="200" y1="150" x2="300" y2="170"/>
-  <line x1="300" y1="170" x2="400" y2="200"/>
-  <line x1="200" y1="150" x2="180" y2="250"/>
-  <line x1="180" y1="250" x2="260" y2="280"/>
-  <line x1="260" y1="280" x2="340" y2="300"/>
-</svg>
+    <line x1="100" y1="200" x2="200" y2="150"/>
+    <line x1="200" y1="150" x2="300" y2="170"/>
+    <line x1="300" y1="170" x2="400" y2="200"/>
+    <line x1="200" y1="150" x2="180" y2="250"/>
+    <line x1="180" y1="250" x2="260" y2="280"/>
+    <line x1="260" y1="280" x2="340" y2="300"/>
+  </svg>
 </section>
 
 <section class="story">
-<h2>A Symbol of Direction</h2>
-<p>The Big Dipper is more than just stars. For generations, it served as a compass in the darkness.</p>
-<p>It reminds us that even in the deepest night, there are lights that quietly show the way.</p>
+  <h2>Hope in the Darkness</h2>
+  <p>The Big Dipper is more than a constellation. It teaches us resilience. When life feels vast and uncertain, even the smallest glimmer of light can guide us forward. Look at the stars, and remember: there is always a path, always hope, even in the darkest night.</p>
 </section>
 
 <script src="script.js"></script>
