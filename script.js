@@ -1,3 +1,6 @@
+
+// STAR BACKGROUND
+
 const canvas = document.getElementById("universe");
 const ctx = canvas.getContext("2d");
 
@@ -6,13 +9,13 @@ canvas.height = window.innerHeight;
 
 let stars=[];
 
-for(let i=0;i<600;i++){
+for(let i=0;i<800;i++){
 
 stars.push({
 x:Math.random()*canvas.width,
 y:Math.random()*canvas.height,
 size:Math.random()*2,
-speed:Math.random()*0.3+0.05
+speed:Math.random()*0.4+0.1
 });
 
 }
@@ -37,11 +40,56 @@ ctx.fill();
 
 });
 
+drawMeteors();
+
 requestAnimationFrame(animateStars);
 
 }
 
 animateStars();
+
+
+// METEORS
+
+let meteors=[];
+
+function createMeteor(){
+
+meteors.push({
+x:Math.random()*canvas.width,
+y:0,
+speed:6,
+length:80
+});
+
+}
+
+setInterval(createMeteor,5000);
+
+function drawMeteors(){
+
+meteors.forEach((meteor,index)=>{
+
+ctx.beginPath();
+ctx.moveTo(meteor.x,meteor.y);
+ctx.lineTo(meteor.x-40,meteor.y+meteor.length);
+ctx.strokeStyle="white";
+ctx.lineWidth=2;
+ctx.stroke();
+
+meteor.y+=meteor.speed;
+meteor.x-=2;
+
+if(meteor.y>canvas.height){
+meteors.splice(index,1);
+}
+
+});
+
+}
+
+
+// SOUND BUTTON
 
 const audio=document.getElementById("spaceAudio");
 const button=document.getElementById("soundToggle");
@@ -62,6 +110,9 @@ playing=false;
 }
 
 });
+
+
+// SCRAMBLE TITLE
 
 const text=document.getElementById("scrambleText");
 const finalWord="URSA MAJOR";
@@ -93,6 +144,9 @@ setTimeout(scramble,50);
 }
 
 scramble();
+
+
+// CONSTELLATION SCROLL ANIMATION
 
 gsap.registerPlugin(ScrollTrigger);
 
