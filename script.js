@@ -72,6 +72,43 @@ playing = false;
 
 });
 
+let meteors = [];
+
+function createMeteor(){
+
+meteors.push({
+x:Math.random()*canvas.width,
+y:0,
+speed:6,
+length:80
+});
+
+}
+
+setInterval(createMeteor,5000);
+
+function drawMeteors(){
+
+meteors.forEach((meteor,index)=>{
+
+ctx.beginPath();
+ctx.moveTo(meteor.x,meteor.y);
+ctx.lineTo(meteor.x-40,meteor.y+meteor.length);
+ctx.strokeStyle="white";
+ctx.lineWidth=2;
+ctx.stroke();
+
+meteor.y += meteor.speed;
+meteor.x -= 2;
+
+if(meteor.y > canvas.height){
+meteors.splice(index,1);
+}
+
+});
+
+}
+
 
 // GSAP SCRAMBLE EFFECT
 
