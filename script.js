@@ -143,4 +143,14 @@ setTimeout(scramble,50);
 
 }
 
+gsap.from(".dipper-lines line",{
+scrollTrigger:{
+trigger:".constellation",
+start:"top 80%"
+},
+duration:2,
+drawSVG:0,
+stagger:0.3
+});
+
 scramble();
