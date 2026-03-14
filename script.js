@@ -51,52 +51,70 @@ textElement.innerText=result;
 
 
 
-// STAR BACKGROUND
+// SPACE WARP STARFIELD
 
-const canvas=document.getElementById("universe");
-const ctx=canvas.getContext("2d");
+const canvas = document.getElementById("universe");
+const ctx = canvas.getContext("2d");
 
-canvas.width=window.innerWidth;
-canvas.height=window.innerHeight;
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 
-let stars=[];
+let stars = [];
+const STAR_COUNT = 900;
 
-for(let i=0;i<800;i++){
+for (let i = 0; i < STAR_COUNT; i++) {
 
 stars.push({
-x:Math.random()*canvas.width,
-y:Math.random()*canvas.height,
-size:Math.random()*2,
-speed:Math.random()*0.3 + 0.05
+x: Math.random() * canvas.width,
+y: Math.random() * canvas.height,
+z: Math.random() * canvas.width
 });
 
 }
 
-function animate(){
+function animateStars(){
 
-ctx.clearRect(0,0,canvas.width,canvas.height);
+ctx.fillStyle = "black";
+ctx.fillRect(0,0,canvas.width,canvas.height);
 
-stars.forEach(star=>{
+for(let i = 0; i < STAR_COUNT; i++){
 
-star.y+=star.speed;
+let star = stars[i];
 
-if(star.y>canvas.height){
-star.y=0;
-star.x=Math.random()*canvas.width;
+star.z -= 1.5;
+
+if(star.z <= 0){
+
+star.x = Math.random() * canvas.width;
+star.y = Math.random() * canvas.height;
+star.z = canvas.width;
+
 }
+
+let k = 128.0 / star.z;
+
+let px = star.x * k + canvas.width / 2;
+let py = star.y * k + canvas.height / 2;
+
+if(px >= 0 && px <= canvas.width && py >= 0 && py <= canvas.height){
+
+let size = (1 - star.z / canvas.width) * 3;
 
 ctx.beginPath();
-ctx.arc(star.x,star.y,star.size,0,Math.PI*2);
-ctx.fillStyle="white";
+ctx.arc(px, py, size, 0, Math.PI * 2);
+ctx.fillStyle = "white";
 ctx.fill();
-
-});
-
-requestAnimationFrame(animate);
 
 }
 
-animate();
+}
+
+requestAnimationFrame(animateStars);
+
+}
+
+animateStars();
+
 
 
 
