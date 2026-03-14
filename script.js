@@ -1,11 +1,63 @@
+// SOUND BUTTON
+
+const audio = document.getElementById("spaceAudio");
+const button = document.getElementById("soundToggle");
+
+button.onclick = () => {
+
+if(audio.paused){
+audio.play();
+button.innerText="🔊 Sound Enabled";
+}else{
+audio.pause();
+button.innerText="🔊 Enable Space Sound";
+}
+
+};
+
+
+
+// GSAP GLITCH TEXT
+
+const textElement = document.getElementById("scrambleText");
+const finalText = textElement.innerText;
+
+const chars="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%";
+
+let progress={value:0};
+
+gsap.to(progress,{
+value:1,
+duration:2,
+ease:"power2.out",
+onUpdate:()=>{
+
+let result="";
+
+for(let i=0;i<finalText.length;i++){
+
+if(i<progress.value*finalText.length){
+result+=finalText[i];
+}else{
+result+=chars[Math.floor(Math.random()*chars.length)];
+}
+
+}
+
+textElement.innerText=result;
+
+}
+});
+
+
 
 // STAR BACKGROUND
 
-const canvas = document.getElementById("universe");
-const ctx = canvas.getContext("2d");
+const canvas=document.getElementById("universe");
+const ctx=canvas.getContext("2d");
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
 
 let stars=[];
 
@@ -15,12 +67,12 @@ stars.push({
 x:Math.random()*canvas.width,
 y:Math.random()*canvas.height,
 size:Math.random()*2,
-speed:Math.random()*0.4+0.1
+speed:Math.random()*0.3 + 0.05
 });
 
 }
 
-function animateStars(){
+function animate(){
 
 ctx.clearRect(0,0,canvas.width,canvas.height);
 
@@ -40,123 +92,74 @@ ctx.fill();
 
 });
 
-drawMeteors();
-
-requestAnimationFrame(animateStars);
+requestAnimationFrame(animate);
 
 }
 
-animateStars();
+animate();
+
 
 
 // METEORS
 
-let meteors=[];
+function meteor(){
 
-function createMeteor(){
+let x=Math.random()*canvas.width;
+let y=0;
 
-meteors.push({
-x:Math.random()*canvas.width,
-y:0,
-speed:6,
-length:80
-});
+let length=100;
+let speed=5;
+let opacity=1;
 
-}
-
-setInterval(createMeteor,5000);
-
-function drawMeteors(){
-
-meteors.forEach((meteor,index)=>{
+function shoot(){
 
 ctx.beginPath();
-ctx.moveTo(meteor.x,meteor.y);
-ctx.lineTo(meteor.x-40,meteor.y+meteor.length);
-ctx.strokeStyle="white";
-ctx.lineWidth=2;
+ctx.moveTo(x,y);
+ctx.lineTo(x+length,y+length);
+ctx.strokeStyle="rgba(255,255,255,"+opacity+")";
 ctx.stroke();
 
-meteor.y+=meteor.speed;
-meteor.x-=2;
+x+=speed;
+y+=speed;
+opacity-=0.02;
 
-if(meteor.y>canvas.height){
-meteors.splice(index,1);
+if(opacity>0){
+requestAnimationFrame(shoot);
 }
+
+}
+
+shoot();
+
+}
+
+setInterval(meteor,7000);
+
+
+
+// CONSTELLATION REVEAL
+
+const starsConst=document.querySelectorAll(".star");
+const lines=document.querySelector(".dipper-lines");
+
+window.addEventListener("scroll",()=>{
+
+const trigger=document.querySelector(".constellation").offsetTop-400;
+
+if(window.scrollY>trigger){
+
+starsConst.forEach((star,i)=>{
+
+setTimeout(()=>{
+star.classList.add("visible");
+},i*300);
 
 });
 
-}
-
-
-// SOUND BUTTON
-
-const audio=document.getElementById("spaceAudio");
-const button=document.getElementById("soundToggle");
-
-let playing=false;
-
-button.addEventListener("click",()=>{
-
-if(!playing){
-audio.volume=0.4;
-audio.play();
-button.textContent="🔇 Disable Space Sound";
-playing=true;
-}else{
-audio.pause();
-button.textContent="🔊 Enable Space Sound";
-playing=false;
-}
-
-});
-
-
-// SCRAMBLE TITLE
-
-const text=document.getElementById("scrambleText");
-const finalWord="URSA MAJOR";
-const chars="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-
-let frame=0;
-
-function scramble(){
-
-let output="";
-
-for(let i=0;i<finalWord.length;i++){
-
-if(i<frame){
-output+=finalWord[i];
-}else{
-output+=chars[Math.floor(Math.random()*chars.length)];
-}
+setTimeout(()=>{
+lines.classList.add("visible");
+},1500);
 
 }
 
-text.textContent=output;
-
-if(frame<=finalWord.length){
-frame+=0.5;
-setTimeout(scramble,50);
-}
-
-}
-
-scramble();
-
-
-// CONSTELLATION SCROLL ANIMATION
-
-gsap.registerPlugin(ScrollTrigger);
-
-gsap.from(".dipper-lines line",{
-scrollTrigger:{
-trigger:".constellation",
-start:"top 80%"
-},
-duration:1.2,
-opacity:0,
-scaleX:0,
-stagger:0.3
 });
