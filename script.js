@@ -1,27 +1,28 @@
-// SPACE SOUND BUTTON
+// SOUND BUTTON
 
 const audio = document.getElementById("spaceAudio");
 const button = document.getElementById("soundToggle");
 
-button.addEventListener("click", () => {
+button.onclick = () => {
 
 if(audio.paused){
 audio.play();
-button.innerText="Sound Enabled";
+button.innerText="🔊 Sound Enabled";
 }else{
 audio.pause();
-button.innerText="Enable Space Sound";
+button.innerText="🔊 Enable Space Sound";
 }
 
-});
+};
 
 
-// GSAP SCRAMBLE TEXT
+
+// GSAP GLITCH TEXT
 
 const textElement = document.getElementById("scrambleText");
 const finalText = textElement.innerText;
 
-const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890#@$%";
+const chars="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%";
 
 let progress={value:0};
 
@@ -35,7 +36,7 @@ let result="";
 
 for(let i=0;i<finalText.length;i++){
 
-if(i < progress.value * finalText.length){
+if(i<progress.value*finalText.length){
 result+=finalText[i];
 }else{
 result+=chars[Math.floor(Math.random()*chars.length)];
@@ -50,7 +51,7 @@ textElement.innerText=result;
 
 
 
-// 3D PARALLAX STARFIELD
+// STAR BACKGROUND
 
 const canvas=document.getElementById("universe");
 const ctx=canvas.getContext("2d");
@@ -59,24 +60,17 @@ canvas.width=window.innerWidth;
 canvas.height=window.innerHeight;
 
 let stars=[];
-let mouseX=0;
-let mouseY=0;
 
-for(let i=0;i<1200;i++){
+for(let i=0;i<800;i++){
 
 stars.push({
 x:Math.random()*canvas.width,
 y:Math.random()*canvas.height,
 size:Math.random()*2,
-speed:Math.random()*0.2
+speed:Math.random()*0.3 + 0.05
 });
 
 }
-
-document.addEventListener("mousemove",e=>{
-mouseX=e.clientX;
-mouseY=e.clientY;
-});
 
 function animate(){
 
@@ -84,10 +78,12 @@ ctx.clearRect(0,0,canvas.width,canvas.height);
 
 stars.forEach(star=>{
 
-star.x += (mouseX - canvas.width/2) * 0.00005;
-star.y += star.speed;
+star.y+=star.speed;
 
-if(star.y > canvas.height) star.y=0;
+if(star.y>canvas.height){
+star.y=0;
+star.x=Math.random()*canvas.width;
+}
 
 ctx.beginPath();
 ctx.arc(star.x,star.y,star.size,0,Math.PI*2);
@@ -112,7 +108,7 @@ let x=Math.random()*canvas.width;
 let y=0;
 
 let length=100;
-let speed=4;
+let speed=5;
 let opacity=1;
 
 function shoot(){
@@ -137,7 +133,7 @@ shoot();
 
 }
 
-setInterval(meteor,6000);
+setInterval(meteor,7000);
 
 
 
