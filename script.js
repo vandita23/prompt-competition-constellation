@@ -150,13 +150,40 @@ scramble();
 
 gsap.registerPlugin(ScrollTrigger);
 
-gsap.from(".dipper-lines line",{
+
+// STARS APPEAR ONE BY ONE
+
+gsap.to(".star",{
+
 scrollTrigger:{
 trigger:".constellation",
-start:"top 80%"
+start:"top 70%"
 },
+
+opacity:1,
+scale:1.6,
+duration:0.8,
+stagger:0.4,
+ease:"power2.out"
+
+});
+
+
+// LINES DRAW AFTER STARS
+
+gsap.from(".dipper-lines line",{
+
+scrollTrigger:{
+trigger:".constellation",
+start:"top 70%"
+},
+
 duration:1.2,
 opacity:0,
 scaleX:0,
-stagger:0.3
+transformOrigin:"left center",
+stagger:0.3,
+delay:2.5
+
+});
 });
